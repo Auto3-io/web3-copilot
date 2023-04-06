@@ -11,8 +11,13 @@
             "subcontracts": [
                 {
                     "name": "SwapRouter",
-                    "address": "0x12345",
-                    "description": "Routes swaps between tokens"
+                    "description": "Routes swaps between tokens",
+                    "chains": [
+                        {
+                            "name": "Ethereum",
+                            "address": "0x12345"
+                        }
+                    ]
                 }
             ]
         },
@@ -26,8 +31,13 @@
             "subcontracts": [
                 {
                     "name": "LendingPool",
-                    "address": "0xabcde...",
-                    "description": "Handles deposits, withdrawals, and borrows"
+                    "description": "Handles deposits, withdrawals, and borrows",
+                    "chains": [
+                        {
+                            "name": "Ethereum",
+                            "address": "0x12345"
+                        }
+                    ]
                 }
             ]
         }
@@ -37,8 +47,12 @@
             "type": "ERC20",
             "name": "USD Coin",
             "symbol": "USDC",
-            "address": "0xabcdefgh...",
-            "chain": "Ethereum"
+            "chains": [
+                {
+                    "name": "Ethereum",
+                    "address": "0x12345"
+                }
+            ]
         }
     ]
 }
