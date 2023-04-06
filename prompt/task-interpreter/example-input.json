@@ -1,0 +1,44 @@
+{
+    "user_requirement": "Swap 1000 USDC for ETH in Ethereum, then send half to 0x123, and deposit the rest to Aave",
+    "protocols": [
+        {
+            "name": "Uniswap",
+            "description": "A decentralized exchange protocol for token swaps",
+            "supported_chains": [
+                "Ethereum",
+                "Optimism"
+            ],
+            "subcontracts": [
+                {
+                    "name": "SwapRouter",
+                    "address": "0x12345",
+                    "description": "Routes swaps between tokens"
+                }
+            ]
+        },
+        {
+            "name": "Aave",
+            "description": "A decentralized non-custodial liquidity market protocol",
+            "supported_chains": [
+                "Ethereum",
+                "Polygon"
+            ],
+            "subcontracts": [
+                {
+                    "name": "LendingPool",
+                    "address": "0xabcde...",
+                    "description": "Handles deposits, withdrawals, and borrows"
+                }
+            ]
+        }
+    ],
+    "tokens": [
+        {
+            "type": "ERC20",
+            "name": "USD Coin",
+            "symbol": "USDC",
+            "address": "0xabcdefgh...",
+            "chain": "Ethereum"
+        }
+    ]
+}
