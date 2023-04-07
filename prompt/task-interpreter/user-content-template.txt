@@ -1,0 +1,79 @@
+You must output a pure YAML and the schema must be:
+- steps: list
+    - id
+    - action
+    - protocol (if needed)
+        - name
+        - description
+        - subcontract
+            - name
+            - chain
+            - address
+            - description
+    - tokens: list
+        - name
+        - chain
+        - address
+Protocol Descriptions:
+{% for protocol in protocols -%}
+- {{ protocol.name }}: {{ protocol.description }}.
+    Supported chains: {{ ', '.join(protocol.supported_chains) }}.
+    Subcontracts:
+    {% for subcontract in protocol.subcontracts -%}
+        - {{ subcontract.name }}: {{ subcontract.description }}
+        {% for chain in subcontract.chains -%}
+        - {{ chain.name }}: {{ chain.address }}
+        {% endfor -%}
+    {% endfor -%}
+{% endfor -%}
+
+ERC20/ERC721 Tokens:
+{% for token in tokens -%}
+- {{ token.type }}: {{ token.name }} ({{ token.symbol }})
+    {% for chain in token.chains -%}
+    - Address: {{chain.address}}, Chain: {{chain.name}}
+    {% endfor -%}
+{% endfor -%}
+
+A full output example:
+steps:
+  - id: '1'
+    action: 'Swap 1000 USDC for ETH in Ethereum'
+    protocol:
+      name: Uniswap
+      description: A decentralized exchange protocol for token swaps
+      subcontract:
+        name: SwapRouter
+        chain: Ethereum
+        address: 0x12345
+        description: Routes swaps between tokens
+    tokens:
+      - name: USDC
+        chain: Ethereum
+        address: 0x12345
+      - name: ETH
+        chain: Ethereum
+        address: null
+
+  - id: '2'
+    action: 'Send half of the swapped ETH to 0x123'
+    protocol: null
+    tokens:
+      - name: ETH
+        chain: Ethereum
+        address: null
+      
+  - id: '3'
+    action: 'Deposit the rest of the swapped ETH to Aave'
+    protocol:
+      name: Aave
+      description: A decentralized non-custodial liquidity market protocol
+      subcontract:
+        name: LendingPool
+        chain: Ethereum
+        address: 0x12345
+        description: Handles deposits, withdrawals, and borrows
+    tokens:
+      - name: ETH
+        chain: Ethereum
+        address: null
