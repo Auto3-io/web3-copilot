@@ -1,5 +1,5 @@
-from prompt import config
-from prompt.data.loader import get_protocols
+from copilot import config
+from copilot.data.loader import get_protocols
 import jinja2
 from langchain.chat_models import PromptLayerChatOpenAI
 from langchain.callbacks.base import CallbackManager
