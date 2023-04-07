@@ -5,75 +5,51 @@ You must output a pure YAML and the schema must be:
     - protocol (if needed)
         - name
         - description
-        - subcontract
-            - name
-            - chain
-            - address
-            - description
+        - chain (where the action happend)
     - tokens: list
         - name
         - chain
-        - address
+    - notes
 Protocol Descriptions:
 {% for protocol in protocols -%}
 - {{ protocol.name }}: {{ protocol.description }}.
-    Supported chains: {{ ', '.join(protocol.supported_chains) }}.
-    Subcontracts:
-    {% for subcontract in protocol.subcontracts -%}
-        - {{ subcontract.name }}: {{ subcontract.description }}
-        {% for chain in subcontract.chains -%}
-        - {{ chain.name }}: {{ chain.address }}
-        {% endfor -%}
-    {% endfor -%}
+    Chains: {{ ', '.join(protocol.chains) }}.
 {% endfor -%}
 
 ERC20/ERC721 Tokens:
 {% for token in tokens -%}
-- {{ token.type }}: {{ token.name }} ({{ token.symbol }})
-    {% for chain in token.chains -%}
-    - Address: {{chain.address}}, Chain: {{chain.name}}
-    {% endfor -%}
+- {{ token.type }}: {{ token.name }} ({{ token.symbol }}) ({{ ', '.join(token.chains) }})
 {% endfor -%}
 
-A full output example:
 steps:
-  - id: '1'
-    action: 'Swap 1000 USDC for ETH in Ethereum'
+  - id: 1
+    action: 'Swap 1000 USDC for ETH on Uniswap'
     protocol:
-      name: Uniswap
-      description: A decentralized exchange protocol for token swaps
-      subcontract:
-        name: SwapRouter
-        chain: Ethereum
-        address: 0x12345
-        description: Routes swaps between tokens
+      name: 'Uniswap'
+      description: 'A decentralized exchange protocol for token swaps.'
+      chain: 'Ethereum'
     tokens:
-      - name: USDC
-        chain: Ethereum
-        address: 0x12345
-      - name: ETH
-        chain: Ethereum
-        address: null
-
-  - id: '2'
-    action: 'Send half of the swapped ETH to 0x123'
-    protocol: null
+      - name: 'USDC'
+        chain: 'Ethereum'
+      - name: 'ETH'
+        chain: 'Ethereum'
+    notes: 'The source of USDC can be the user balance or obtained from a previous operation.'
+  - id: 2
+    action: 'Send half of the ETH to 0x123'
     tokens:
-      - name: ETH
-        chain: Ethereum
-        address: null
-      
+      - name: 'ETH'
+        chain: 'Ethereum'
+    notes: 'The destination address can be replaced with the actual receiving address.'
   - id: '3'
-    action: 'Deposit the rest of the swapped ETH to Aave'
+    action: 'Deposit the other half of the ETH to Aave'
     protocol:
-      name: Aave
-      description: A decentralized non-custodial liquidity market protocol
-      subcontract:
-        name: LendingPool
-        chain: Ethereum
-        address: 0x12345
-        description: Handles deposits, withdrawals, and borrows
+      name: 'Aave'
+      description: 'A decentralized non-custodial liquidity market protocol.'
+      chain: 'Ethereum'
     tokens:
-      - name: ETH
-        chain: Ethereum
-        address: null
+      - name: 'ETH'
+        chain: 'Ethereum'
+      - name: 'aETH'
+        chain: 'Ethereum'
+    notes: 'The resulting token from the Aave deposit is aETH, which represents the deposited ETH with interest. This operation requires the user to have already approved Aave to spend their ETH on their behalf.'
+  

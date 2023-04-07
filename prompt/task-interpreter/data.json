@@ -1,0 +1,31 @@
+{
+    "protocols": [
+        {
+            "name": "Uniswap",
+            "description": "A decentralized exchange protocol for token swaps",
+            "chains": [
+                "Ethereum",
+                "Optimism"
+            ]
+        },
+        {
+            "name": "Aave",
+            "description": "A decentralized non-custodial liquidity market protocol",
+            "chains": [
+                "Ethereum",
+                "Polygon"
+            ]
+        }
+    ],
+    "tokens": [
+        {
+            "type": "ERC20",
+            "name": "USD Coin",
+            "symbol": "USDC",
+            "chains": [
+                "Ethereum",
+                "Polygon"
+            ]
+        }
+    ]
+}
