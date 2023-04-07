@@ -21,10 +21,10 @@ class LazyLoadedDataFrame:
             self._df = self._load_data()
         return self._df
 
-    def get_contract_address(self, token_name, chain_name):
+    def get_contract_address(self, symbol, chain_name):
         df = self.get_dataframe()
-        contract_addresses = df.loc[df['name'] ==
-                                    token_name, 'contract_addresses'].values[0]
+        contract_addresses = df.loc[df['symbol'] ==
+                                    symbol, 'contract_addresses'].values[0]
         for contract in contract_addresses:
             if contract['platform'] == chain_name:
                 return contract['contract_address']
@@ -47,6 +47,10 @@ def get_protocols():
     with p.open('r') as f:
         protocols = yaml.safe_load(f.read())
     return protocols
+
+
+def get_erc20_address(symbol, chain_name):
+    return erc20_df.get_contract_address(symbol, chain_name)
 
 
 __all__ = ['get_protocols', 'get_erc20_tokens']
