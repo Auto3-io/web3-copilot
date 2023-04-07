@@ -4,10 +4,10 @@ version = "0.1.0"
 description = ""
 authors = ["Your Name <you@example.com>"]
 readme = "README.md"
-packages = [{include = "prompt"}]
+packages = [{include = "copilot"}]
 
 [tool.poetry.scripts]
-greet = "prompt.greet:greet"
+greet = "copilot.greet:greet"
 
 [tool.poetry.dependencies]
 python = "^3.10"

@@ -4,7 +4,7 @@ import time
 
 import arrow
 import click
-from prompt.task_interpreter import task_interpreter
+from copilot.task_interpreter import task_interpreter
 
 
 @click.command()
