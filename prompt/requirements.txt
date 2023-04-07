@@ -1,3 +1,0 @@
-promptlayer
-jinja2
-llama-index

@@ -1,0 +1,19 @@
+For each step, the output should be in the following format:
+
+Step_number. Step_description:
+- Contract Address: contract_address
+- Method: method_name (associated_contract, protocol)
+  Description: method_description
+
+Steps:
+{% for step in steps -%}
+- step {{ step.id }}
+  description: {{ step.description }}
+  chain: {{ step.chain }}
+  methods:
+    {% for method in step.methods -%}
+    - {{ method.name }}
+      ABI: method.abi
+      doc: method.doc
+    {% endfor -%}
+{% endfor -%}

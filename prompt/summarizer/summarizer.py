@@ -18,21 +18,19 @@ with p.open('r') as f:
     protocol_data = f.read()
 
 
-def task_interpreter(user_requirement: str):
-    p = Path(__file__).with_name('./interpreter-input-template.txt')
-    with p.open('r') as f:
-        user_content_template_content = f.read()
+def task_interpreter(steps):
+    user_content_template_content = open('./user-content-template.txt').read()
 
     user_template = jinja2.Template(user_content_template_content)
     output = user_template.render(protocol_data, trim_blocks=True,
                                   lstrip_blocks=True, keep_trailing_newline=True, autoescape=False)
 
     chat = PromptLayerChatOpenAI(streaming=True, callback_manager=CallbackManager(
-        [StreamingStdOutCallbackHandler()]), verbose=True, temperature=0, pl_tags=['task interpreter'])
+        [StreamingStdOutCallbackHandler()]), verbose=True, temperature=0, pl_tags=['summarizer'])
 
     messages = [
         SystemMessage(
-            content=f'Please provide a step-by-step plan that satisfies the following user requirement "{user_requirement}". Consider the provided protocol descriptions and choose the most suitable protocols and subcontracts to use in each step. Include the necessary ERC20/ERC721 token information if needed. The source of assets for each step of operation should also be clearly explained, such as the result from a specific step or from user\'s balance.'),
+            content='Summarize the following steps for generating an executable Web3 program. For each step, include the description, contract address, method name, associated contract, protocol, and a brief description of the method.'),
         HumanMessage(
             content=output
         )
