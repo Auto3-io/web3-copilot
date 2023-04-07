@@ -1,0 +1,29 @@
+- name: Uniswap
+  description: "Provide liquidity: Anyone can deposit two ERC-20 tokens into a liquidity pool of the Uniswap protocol and earn trading fees and other rewards.\nSwap tokens: Anyone can swap one ERC-20 token for another without registration or trust in any intermediary.\nCreate markets: Anyone can create a new liquidity pool and provide a decentralized trading market for any two ERC-20 tokens.\nManage protocol: UNI token holders and delegates can participate in the governance of the Uniswap protocol, propose and vote on protocol upgrades and improvements."
+  website: https://uniswap.org/
+  chains: [ "Ethereum", "Optimism"]
+  docs: https://docs.uniswap.org/
+
+- name: AAVE
+  description: "Provide liquidity: Anyone can deposit cryptocurrencies and tokens into a liquidity pool of the Aave protocol and earn interest and other rewards.\nBorrow assets: Anyone can borrow cryptocurrencies and tokens from the Aave protocol without registration or trust in any intermediary. Borrowers can choose fixed or variable interest rates, and overcollateralized (perpetual) or undercollateralized (one-block liquidity) modes.\nBuild applications: Developers can leverage the open-source code and documentation of the Aave protocol to integrate its features into their own products and services.\nManage protocol: AAVE token holders and delegates can participate in the governance of the Aave protocol, propose and vote on protocol upgrades and improvements."
+  website: https://aave.com/
+  chains: [ "Ethereum", "Optimism"]
+  docs: https://docs.aave.com/
+
+- name: Curve
+  description: "Maximize rewards: It allows you to maximize rewards from your existing cards and provides you with additional cashback or cryptocurrency.\nSimplify payment methods: It allows you to consolidate all your cards into one smart credit card, simplifying payment methods.\nManage cash flow: You can view all your expenses on Curve without the need for spreadsheets. You can filter your expense view as needed and manage your cash flow like a pro.\nGo Back in Time®: It allows you to switch the charge from one card to another within 30 days after the transaction when using Curve.\nAutomatic intervention: If the card you choose fails, Curve will automatically intervene. Simply pay your monthly bill in full and on time to avoid any interest charges."
+  website: https://curve.fi/
+  chains: [ "Ethereum", "Optimism"]
+
+- name: Lido
+  description: "Liquidity staking: Supports Ethereum, Terra and Solana blockchains, allowing users to stake their ETH without a minimum deposit or the need to maintain infrastructure.\nParticipate in on-chain activities: Users can participate in on-chain activities (such as lending) to compound their returns.\nLDO token: LDO is Lido’s native utility token used to grant governance rights to the Lido DAO, manage fee parameters and allocation, and manage the addition and removal of Lido node operators.\nImprove liquidity: Lido improves liquidity across the entire crypto market by issuing derivative tokens that traders can deploy on decentralized finance (DeFi) protocols such as Yearn, Curve and Maker."
+  website: https://lido.fi/
+  chains: [ "Ethereum", "Optimism"]
+
+- name: GMX
+  description: "Trade cryptocurrencies: Trade top cryptocurrencies such as BTC, ETH, AVAX with up to 50x leverage directly from your wallet. Reduce liquidation risks: High-quality price feeds determine when liquidations occur, keeping positions safe from temporary wicks. Save on costs: Enter and exit positions with minimal spread and zero price impact. Get the optimal price without incurring additional costs. Simple swaps: Open positions through a simple swap interface. Conveniently swap from any supported asset into the position of your choice."
+  chains: [ "Ethereum", "Optimism"]
+
+- name: Scroll
+  description: "Provide JSON-RPC interface, accept L2 transactions, and generate new L2 blocks and state roots Implement decentralized validity proofs through node network, proof network and Rollup contract Implement asset and information transfer between L1 and L2 through cross-chain bridge contract Implement EVM-equivalent zkEVM expansion network, support seamless migration of applications on Ethereum"
+  chains: [ "Ethereum", "Optimism"]

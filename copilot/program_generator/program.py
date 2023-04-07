@@ -56,7 +56,7 @@ openai.ChatCompletion.create(
     model="gpt-3.5-turbo",
     messages=[
         {"role": "system", "content": "Generate a Python program to accomplish the following on-chain operations:"},
-        {"role": "user", "content":  user_content},
+        {"role": "user", "content": user_content},
     ],
     pl_tags=["program"]
 )
