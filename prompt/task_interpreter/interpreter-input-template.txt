@@ -1,3 +1,7 @@
+Protocols you can access:
+{% for protocol in protocols -%}
+- {{ protocol.name }} ({{ ', '.join(protocol.chains) }}): {{ protocol.description }}
+{% endfor %}
 You must output a pure YAML and the schema must be:
 - steps: list
     - id
@@ -10,17 +14,8 @@ You must output a pure YAML and the schema must be:
         - name
         - chain
     - notes
-Protocol Descriptions:
-{% for protocol in protocols -%}
-- {{ protocol.name }}: {{ protocol.description }}.
-    Chains: {{ ', '.join(protocol.chains) }}.
-{% endfor -%}
 
-ERC20/ERC721 Tokens:
-{% for token in tokens -%}
-- {{ token.type }}: {{ token.name }} ({{ token.symbol }}) ({{ ', '.join(token.chains) }})
-{% endfor -%}
-
+A full output example:
 steps:
   - id: 1
     action: 'Swap 1000 USDC for ETH on Uniswap'
@@ -40,7 +35,7 @@ steps:
       - name: 'ETH'
         chain: 'Ethereum'
     notes: 'The destination address can be replaced with the actual receiving address.'
-  - id: '3'
+  - id: 3
     action: 'Deposit the other half of the ETH to Aave'
     protocol:
       name: 'Aave'
