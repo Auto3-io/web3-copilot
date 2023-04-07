@@ -520,18 +520,19 @@ i18n = ["Babel (>=2.7)"]
 
 [[package]]
 name = "langchain"
-version = "0.0.133"
+version = "0.0.134"
 description = "Building applications with LLMs through composability"
 category = "main"
 optional = false
 python-versions = ">=3.8.1,<4.0"
 files = [
-    {file = "langchain-0.0.133-py3-none-any.whl", hash = "sha256:12520204ceff8ed6125bc8d506f2d614f14712f078ea11b04321beed25411258"},
-    {file = "langchain-0.0.133.tar.gz", hash = "sha256:d790a630f85de56c6977a7c55a217261e7d0a56b73ef0f1dd6c70147366e4eb4"},
+    {file = "langchain-0.0.134-py3-none-any.whl", hash = "sha256:6a107d8f36ffb6e801c3a14efcfe75facb1d7d41c2b8aa348efe4c3d56c1b3b4"},
+    {file = "langchain-0.0.134.tar.gz", hash = "sha256:fb95c443bc4bc49abb3c07c388ce27c4c590efdd371b4d3fc082428c6911139e"},
 ]
 
 [package.dependencies]
 aiohttp = ">=3.8.3,<4.0.0"
+async-timeout = {version = ">=4.0.0,<5.0.0", markers = "python_version < \"3.11\""}
 dataclasses-json = ">=0.5.7,<0.6.0"
 numpy = ">=1,<2"
 openapi-schema-pydantic = ">=1.2,<2.0"
@@ -1387,6 +1388,18 @@ files = [
 ]
 
 [[package]]
+name = "unidiff"
+version = "0.7.5"
+description = "Unified diff parsing/metadata extraction library."
+category = "dev"
+optional = false
+python-versions = "*"
+files = [
+    {file = "unidiff-0.7.5-py2.py3-none-any.whl", hash = "sha256:c93bf2265cc1ba2a520e415ab05da587370bc2a3ae9e0414329f54f0c2fc09e8"},
+    {file = "unidiff-0.7.5.tar.gz", hash = "sha256:2e5f0162052248946b9f0970a40e9e124236bf86c82b70821143a6fc1dea2574"},
+]
+
+[[package]]
 name = "urllib3"
 version = "1.26.15"
 description = "HTTP library with thread-safe connection pooling, file post, and more."
@@ -1494,4 +1507,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "48641a0d7ad0d65093ea9a619eab8ad7c9b117f14c63b0bc4be878357eb20a01"
+content-hash = "a517e66d54ea36f02808eba69d9b878f432878880dcf2128b22c59b65a8a9c93"
