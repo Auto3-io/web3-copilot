@@ -18,10 +18,12 @@ pyyaml = "^6.0"
 promptlayer = "^0.1.80"
 jinja2 = "^3.1.2"
 pandas = "^2.0.0"
+langchain = "0.0.134"
 
 
 [tool.poetry.group.dev.dependencies]
 autopep8 = "^2.0.2"
+unidiff = "^0.7.5"
 
 [build-system]
 requires = ["poetry-core"]
