@@ -18,15 +18,15 @@ def search_engine(actions: List[str]):
     print("start searching: ")
 
     # define custom QuestionAnswerPrompt
-    query_str = "What did the author do growing up?"
     QA_PROMPT_TMPL = (
         "Write a summary for the action step with a method that is needed to invoke."
-        "The summary will help another LLM generate Python3 program."
+        "The summary will help another LLM generate Python program."
         "You should output related usage note, method signature, protocol, contract, chain are required for user to use this method. \n"
         "---------------------\n"
         "{context_str}"
         "\n---------------------\n"
-        "The method name and related information you use must come from the above-mentioned content., " 
+        "Builtin transfer method for ETH: transfer(uint amount, address to)\n"
+        "The method name and related information you use must come from the above-mentioned content, " 
         "please write summary for action: {query_str}\n\n"
         "You are required to output following format. \n"
         "Example output 1: \n"
