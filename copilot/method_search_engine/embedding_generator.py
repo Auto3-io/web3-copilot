@@ -1,9 +1,9 @@
-from llama_index import GPTTreeIndex, SimpleDirectoryReader, LLMPredictor, ServiceContext, PromptHelper, SummaryPrompt
+from llama_index import GPTTreeIndex, SimpleDirectoryReader, LLMPredictor, ServiceContext, PromptHelper, SummaryPrompt, GPTSimpleVectorIndex
 from langchain.chat_models import PromptLayerChatOpenAI
 from pathlib import Path
 
 import nest_asyncio
-nest_asyncio.apply()
+# nest_asyncio.apply()
 
 doc_dir = (Path(__file__) / '../../data/docs').resolve()
 
@@ -34,8 +34,8 @@ SUMMARY_PROMPT = (
     'SUMMARY:"""\n'
 )
 
-index = GPTTreeIndex.from_documents(
-    documents, summary_template=SummaryPrompt(SUMMARY_PROMPT),  service_context=service_context, num_children=3, use_async=True)
+# index = GPTTreeIndex.from_documents(
+    # documents, summary_template=SummaryPrompt(SUMMARY_PROMPT),  service_context=service_context, num_children=3, use_async=True)
+index = GPTSimpleVectorIndex.from_documents(documents, service_context=service_context)
 
-
-index.save_to_disk('./tree_index.json')
+index.save_to_disk('./index.json')
