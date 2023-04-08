@@ -1,7 +1,5 @@
-from llama_index import GPTSimpleVectorIndex, SimpleDirectoryReader, LLMPredictor, ServiceContext, QuestionAnswerPrompt
-from langchain.chat_models import PromptLayerChatOpenAI
-from langchain.callbacks.base import CallbackManager
-from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
+from llama_index import GPTSimpleVectorIndex, LLMPredictor, ServiceContext, QuestionAnswerPrompt
+from copilot.config import ChatOpenAI
 from copilot.async_util import run_async_tasks
 
 from typing import List
@@ -10,7 +8,7 @@ from typing import List
 def search_engine(actions: List[str]):
     index = GPTSimpleVectorIndex.load_from_disk('./index.json')
 
-    llm_predictor = LLMPredictor(llm=PromptLayerChatOpenAI(
+    llm_predictor = LLMPredictor(llm=ChatOpenAI(
         temperature=0, model_name="gpt-3.5-turbo", max_tokens=1024, pl_tags=['search_engine']))
 
     service_context = ServiceContext.from_defaults(llm_predictor=llm_predictor)
@@ -26,10 +24,10 @@ def search_engine(actions: List[str]):
         "{context_str}"
         "\n---------------------\n"
         "Builtin transfer method for ETH: transfer(uint amount, address to)\n"
-        "The method name and related information you use must come from the above-mentioned content, " 
+        "The method name and related information you use must come from the above-mentioned content, "
         "please write summary for action: {query_str}\n\n"
-        "You are required to output following format. \n"
-        "Example output 1: \n"
+        "You must output the following format. \n"
+        "Example output: \n"
         "- method: swapMethod(uint amountIn, uint amountOutMin, address[] path, address to, uint deadline) external returns (uint[] amounts)\n"
         "  protocol: SomeProtocol (egg., uniswapV2, aavev2,...)\n"
         "  chain: SomeChain (egg., ethereum, polygon, scroll)\n"
