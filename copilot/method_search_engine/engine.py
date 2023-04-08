@@ -26,12 +26,14 @@ def search_engine(actions: List[str]):
         "---------------------\n"
         "{context_str}"
         "\n---------------------\n"
-        "According to above information, please write summary for action: {query_str}\n\n"
-        "Example output (You are required to output this format.): \n"
+        "The method name and related information you use must come from the above-mentioned content., " 
+        "please write summary for action: {query_str}\n\n"
+        "You are required to output following format. \n"
+        "Example output 1: \n"
         "- method: swapMethod(uint amountIn, uint amountOutMin, address[] path, address to, uint deadline) external returns (uint[] amounts)\n"
         "  protocol: SomeProtocol (egg., uniswapV2, aavev2,...)\n"
         "  chain: SomeChain (egg., ethereum, polygon, scroll)\n"
-        "  contract: SomeContract\n"
+        "  contract: SomeContract \n"
         "  notes: Some notes to tell user how to use this method.\n"
     )
     QA_PROMPT = QuestionAnswerPrompt(QA_PROMPT_TMPL)
