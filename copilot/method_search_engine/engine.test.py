@@ -1,5 +1,6 @@
 from pathlib import Path
 import yaml
+from pprint import pprint
 
 from copilot.method_search_engine.engine import search_engine
 
@@ -12,4 +13,4 @@ with p.open('r') as f:
 
 outputs = search_engine([step['action'] for step in steps])
 
-print(outputs)
+pprint(outputs)
