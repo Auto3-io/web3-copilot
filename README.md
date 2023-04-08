@@ -1,7 +1,7 @@
 # Auto3 Copilot
 > **Unleashing the programmable blockchain for everyone.（人人都是区块链科学家）**
 
-Auto3 Copilot is a **versatile** and **easily expandable** Web3 code generation tool that leverages GPT technology to generate programs efficiently for various blockchain tasks. Users can simply input specific requirements, and the system will generate **a one-click executable code**.
+Auto3 Copilot is a **versatile** and **easily expandable** Web3 tool that leverages GPT technology to generate programs efficiently for various blockchain tasks. Users can simply input specific requirements, and the system will generate **a one-click executable code**.
 
 You can perform any combination of operations on supported protocols through simple natural language.
 
@@ -12,12 +12,12 @@ You can perform any combination of operations on supported protocols through sim
 
 **Supported protocols:**
 
-- Supported chains: Ethereum (more chains soon.)
-- DeFi (You can invoke any method of them via ):
+- Supported chains: Ethereum (more chains comming soon.)
+- DeFi (You can invoke any method of them via natural language):
   - Uniswap V2/V3
   - AAVE V2/V3
   - Curve
-  - ... (more protocols soon. It's very easy to extend)
+  - ... (more protocols comming soon. It's very easy to extend)
 - ERC20 Tokens: Almost all mainstream ERC20 tokens.
 
 ## Quickstart
@@ -32,7 +32,7 @@ $ python apply_patch.py openai_patch.diff langchain langchain/chat_models/openai
 > **Query**: Operate on Ethereum, Swap 1000 USDC for ETH, then send 0.1 amounts of ETH separately to two addresses (0xc9270B4d0aB7A92dC194eFC349d24c685A6A630d, 0x2A52e553D3fa7beb2C55fd4Cc94C5a3F659E8df8), and deposit 0.2 ETH to Scroll.
 
 ```bash
-$ poetry run copilot "Operate on Ethereum, Swap 1000 USDC for ETH, then send 0.1 amounts of ETH separately to two addresses (0xc9270B4d0aB7A92dC194eFC349d24c685A6A630d, 0x2A52e553D3fa7beb2C55fd4Cc94C5a3F659E8df8), and deposit 0.2 ETH to Scroll."
+$ poetry run copilot -i "Operate on Ethereum, Swap 1000 USDC for ETH, then send 0.1 amounts of ETH separately to two addresses (0xc9270B4d0aB7A92dC194eFC349d24c685A6A630d, 0x2A52e553D3fa7beb2C55fd4Cc94C5a3F659E8df8), and deposit 0.2 ETH to Scroll."
 ```
 
 Some examples:
