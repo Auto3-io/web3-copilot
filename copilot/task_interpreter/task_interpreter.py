@@ -1,7 +1,6 @@
-from copilot import config
+from copilot.config import ChatOpenAI
 from copilot.data.loader import get_protocols
 import jinja2
-from langchain.chat_models import PromptLayerChatOpenAI
 from langchain.callbacks.base import CallbackManager
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 from langchain.schema import HumanMessage
@@ -24,7 +23,7 @@ def task_interpreter(user_requirement: str):
     user_template = jinja2.Template(user_content_template_content)
     output = user_template.render(protocols=protocols)
 
-    chat = PromptLayerChatOpenAI(streaming=True, callback_manager=CallbackManager(
+    chat = ChatOpenAI(streaming=True, callback_manager=CallbackManager(
         [StreamingStdOutCallbackHandler()]), verbose=True, temperature=0, pl_tags=['task interpreter'])
 
     messages = [

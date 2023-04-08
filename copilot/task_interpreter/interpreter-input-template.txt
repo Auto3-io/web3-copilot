@@ -15,7 +15,7 @@ You must output a pure YAML and the schema must be:
         - chain
     - notes
 
-A full output example:
+A output example (You must output the following format.):
 steps:
   - id: 1
     action: 'Swap 1000 USDC for ETH on Uniswap'
@@ -29,22 +29,3 @@ steps:
       - name: 'ETH'
         chain: 'Ethereum'
     notes: 'The source of USDC can be the user balance or obtained from a previous operation.'
-  - id: 2
-    action: 'Send half of the ETH to 0x123'
-    tokens:
-      - name: 'ETH'
-        chain: 'Ethereum'
-    notes: 'The destination address can be replaced with the actual receiving address.'
-  - id: 3
-    action: 'Deposit the other half of the ETH to Aave'
-    protocol:
-      name: 'Aave'
-      description: 'A decentralized non-custodial liquidity market protocol.'
-      chain: 'Ethereum'
-    tokens:
-      - name: 'ETH'
-        chain: 'Ethereum'
-      - name: 'aETH'
-        chain: 'Ethereum'
-    notes: 'The resulting token from the Aave deposit is aETH, which represents the deposited ETH with interest. This operation requires the user to have already approved Aave to spend their ETH on their behalf.'
-  

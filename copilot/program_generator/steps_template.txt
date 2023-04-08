@@ -1,28 +1,16 @@
-step 1. Swap 1000 USDC for ETH using Uniswap on Ethereum:
-- Contract: uniswap.Router02(0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D)
-- Method: swapExactTokensForETH((uint amountIn, uint amountOutMin, address[] calldata path, address to, uint deadline) external returns (uint[] memory amounts))
-
-step 2. Swap 0.01 ETH for USDC using Uniswap on Ethereum:
-- Contract: uniswap.Router02(0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D)
-- Method: swapExactETHForTokens((uint amountOutMin, address[] calldata path, address to, uint deadline) external payable returns (uint[] memory amounts))
-
-step 3. Send 0.001 ETH to 0xc9270B4d0aB7A92dC194eFC349d24c685A6A630d:
-- Contract address: none
-- Documentation: Transfers tokens from the sender's account to the specified address...
-
-step 4. Send 0.002 ETH to 0x2A52e553D3fa7beb2C55fd4Cc94C5a3F659E8df8:
-- Contract address: none
-- Documentation: Transfers tokens from the sender's account to the specified address...
-
-step 5. deposit 0.01 ETH to scroll:
-- Contract: L1StandardERC20Gateway(0xe5E30E7c24e4dFcb281A682562E53154C15D3332)
-- Method: depositETH(depositETH(uint256 _amount, uint256 scroll_gas_limit) external payable)
-- Documentation: Deposit ETH from Ethereum to Scroll 
+{% for step in steps -%}
+- step {{ loop.index }}: {{ step.action }}
+  protocol: {{ step.protocol }}
+  contract: {{ step.contract }}
+  chain: {{ step.chain }}
+  address: {{ step.address }}
+  notes: {{ step.notes }}
+{% endfor -%}
 
 Related ERC20:
-- USDC (0x65aFADD39029741B3b8f0756952C74678c9cEC93)
-- WETH (0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6)
-- UNI (0xC51FceEc013cD34aE2e95E6D64E9858F2aC28fFf)
+{% for token in tokens %}
+- {{ token.name }}: {{ token.address }}
+{% endfor -%}
 
 Note: 
 - For each contract ABI, read the file name as {protocol}_{contract}.json (e.g., UNISWAP_ROUTERV2.json for router2, and ERC20.json for USDT).

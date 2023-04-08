@@ -1,21 +1,67 @@
 """Send greetings."""
 
-import time
-
-import arrow
 import click
-from copilot.task_interpreter import task_interpreter
+import copy
+from copilot.task_interpreter.task_interpreter import task_interpreter
+from copilot.method_search_engine.engine import search_engine
+from copilot.data.loader import get_contract_address, get_erc20_address
+from copilot.program_generator.program import program_generator
+import yaml
+
+import os
+import ipdb
 
 
 @click.command()
-@click.argument("tz")
-@click.option("--repeat", "-r", default=1, type=int)
-@click.option("--interval", "-i", default=3, type=int)
-def copilot(tz, repeat=1, interval=3):
-    overall_steps = task_interpreter(user_requirement) # Step with protocol, chain
-    search_result = method_search_engine(overall_steps, db.methods) # + contract, method
+@click.option("--input", "-i", type=str)
+def run(input):
+    click.echo('Strat interpreter user task: {}'.format(input))
+    steps_raw = task_interpreter(input)
+    ipdb.set_trace()
+    steps = yaml.safe_load(steps_raw.content)['steps']
 
-    completed_steps = complete_step(search_result, db.contracts, db.tokens) # + address
-    summarized_steps = summarizer(user_requirement, search_result) # summrize
+    tokens = {}
+    for step in steps:
+        if 'tokens' in step:
+            for token in step['tokens']:
+                if token['name'] not in tokens:
+                    tokens[token['name']] = get_erc20_address(
+                        str(token['name']).upper(), str(token['chain']).lower())
 
-    program = program_generator(summarized_steps)
+    transformed_tokens = []
+    for token in tokens:
+        transformed_tokens.append(
+            {'name': token['symbol'], 'chain': token['chain'], 'address': token['address']})
+
+    for step in steps:
+        if not step['action']:
+            raise Exception("No action in step: {}".format(step))
+
+    click.echo('Start searching methods: {}'.format(
+        [step['action'] for step in steps]))
+    summarized_steps = search_engine([step['action'] for step in steps])
+
+    if len(steps) != len(summarized_steps):
+        raise Exception("Step count not match")
+
+    to_program_steps = []
+    for i in range(summarized_steps):
+        new_step = copy.deepcopy(summarized_steps[i])
+        new_step['action'] = steps[i]['action']
+        new_step['protocol'] = summarized_steps[i]['protocol']
+        new_step['contract'] = summarized_steps[i]['contract']
+        new_step['chain'] = summarized_steps[i]['chain']
+
+        print("Find contract address: {} {} {}".format(
+            new_step['protocol'], new_step['contract'], new_step['chain']))
+
+        new_step['address'] = get_contract_address(
+            new_step['protocol'], new_step['chain'], new_step['contract'])
+        to_program_steps.append(new_step)
+
+    program = program_generator(to_program_steps, )
+
+    # save program to local tmp dir
+    file_path = os.path.join('./', 'code.py')
+    with open(file_path, 'w') as file:
+        file.write(program)
