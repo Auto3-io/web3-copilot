@@ -5,7 +5,8 @@ from pathlib import Path
 import nest_asyncio
 # nest_asyncio.apply()
 
-doc_dir = (Path(__file__) / '../../data/docs').resolve()
+doc_dir = (Path(__file__) / '../../../docs').resolve()
+
 
 documents = SimpleDirectoryReader(
     str(doc_dir), exclude=['*.sh'], recursive=True).load_data()
