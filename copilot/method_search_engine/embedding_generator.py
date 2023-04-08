@@ -37,6 +37,8 @@ SUMMARY_PROMPT = (
 
 # index = GPTTreeIndex.from_documents(
     # documents, summary_template=SummaryPrompt(SUMMARY_PROMPT),  service_context=service_context, num_children=3, use_async=True)
+index = GPTSimpleVectorIndex.load_from_disk('./index.json')
 index = GPTSimpleVectorIndex.from_documents(documents, service_context=service_context)
 
 index.save_to_disk('./index.json')
+
