@@ -1,0 +1,106 @@
+step 1. Swap 1000 USDC for ETH using Uniswap on Ethereum:
+- Contract: uniswap.Router02(0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D)
+- Method: swapExactTokensForETH((uint amountIn, uint amountOutMin, address[] calldata path, address to, uint deadline) external returns (uint[] memory amounts))
+
+step 2. Swap 0.01 ETH for USDC using Uniswap on Ethereum:
+- Contract: uniswap.Router02(0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D)
+- Method: swapExactETHForTokens((uint amountOutMin, address[] calldata path, address to, uint deadline) external payable returns (uint[] memory amounts))
+
+step 3. Send 0.001 ETH to 0xc9270B4d0aB7A92dC194eFC349d24c685A6A630d:
+- Contract address: none
+- Documentation: Transfers tokens from the sender's account to the specified address...
+
+step 4. Send 0.002 ETH to 0x2A52e553D3fa7beb2C55fd4Cc94C5a3F659E8df8:
+- Contract address: none
+- Documentation: Transfers tokens from the sender's account to the specified address...
+
+step 5. deposit 0.01 ETH to scroll:
+- Contract: L1StandardERC20Gateway(0xe5E30E7c24e4dFcb281A682562E53154C15D3332)
+- Method: depositETH(depositETH(uint256 _amount, uint256 scroll_gas_limit) external payable)
+- Documentation: Deposit ETH from Ethereum to Scroll 
+
+Related ERC20:
+- USDC (0x65aFADD39029741B3b8f0756952C74678c9cEC93)
+- WETH (0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6)
+- UNI (0xC51FceEc013cD34aE2e95E6D64E9858F2aC28fFf)
+
+Note: 
+- For each contract ABI, read the file name as {protocol}_{contract}.json (e.g., UNISWAP_ROUTERV2.json for router2, and ERC20.json for USDT).
+- ABIs for erc20 are the same 
+- ABIs should be loaded before functions 
+- use buildTransaction method to generate a transaction 
+- gas_price = w3.toWei("100", "gwei")
+- gas limit for scroll = 3000000
+- scroll deposit amount = w3.toWei(xx, "ether")
+
+Some useful code snippets:
+
+def swap_token_to_eth(
+    amount_in,
+    token_in_address,
+    recipient_address,
+    deadline,
+):
+    """Define the function to swap erc20 token to ETH using Uniswap V2"""
+    uniswap_router = w3.eth.contract(
+        address=UNISWAP_V2_ROUTER_ADDRESS, abi=UNISWAP_V2_ROUTER_ABI
+    )
+    token_in = w3.eth.contract(address=token_in_address, abi=ERC20_ABI)
+
+    # Get token decimals and calculate token amount in wei
+    decimals = token_in.functions.decimals().call()
+    token_amount_in_wei = int(amount_in * (10**decimals))
+
+    # Check the allowance of the Uniswap Router
+    allowance = token_in.functions.allowance(
+        token_in_address, UNISWAP_V2_ROUTER_ADDRESS
+    ).call()
+
+    # Approve the Uniswap Router to spend the input tokens if the allowance is insufficient
+    if allowance < token_amount_in_wei:
+        # Approve the router to spend tokens on your behalf
+        approve_txn = token_in.functions.approve(
+            UNISWAP_V2_ROUTER_ADDRESS, token_amount_in_wei
+        ).buildTransaction(
+            {
+                "from": MY_ADDRESS,
+                "gas": 100000,
+                "gasPrice": gas_price,
+                "nonce": w3.eth.getTransactionCount(MY_ADDRESS),
+            }
+        )
+        signed_approve_txn = Account.sign_transaction(approve_txn, PRIVATE_KEY)
+        approve_txn_hash = w3.eth.sendRawTransaction(signed_approve_txn.rawTransaction)
+        w3.eth.waitForTransactionReceipt(approve_txn_hash)
+        print(f"Approve transaction hash: {approve_txn_hash.hex()}")
+
+    # Build the swap transaction
+    swap_txn = uniswap_router.functions.swapExactTokensForETH(
+        token_amount_in_wei,
+        0,  # Set the minimum amount of output ETH to receive
+        [
+            token_in_address,
+            w3.toChecksumAddress("0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6"),
+        ],  # Path from input token to ETH
+        recipient_address,
+        deadline,
+    ).buildTransaction(
+        {
+            "from": MY_ADDRESS,
+            "gas": 200000,
+            "gasPrice": gas_price,
+            "nonce": w3.eth.getTransactionCount(MY_ADDRESS),
+        }
+    )
+
+    # Sign and send the swap transaction
+    signed_swap_txn = Account.sign_transaction(swap_txn, PRIVATE_KEY)
+    swap_txn_hash = w3.eth.sendRawTransaction(signed_swap_txn.rawTransaction)
+    print(f"Swap transaction hash: {swap_txn_hash.hex()}")
+
+    # Wait for the swap transaction to be mined
+    receipt = w3.eth.waitForTransactionReceipt(swap_txn_hash)
+
+    return receipt
+
+

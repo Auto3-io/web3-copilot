@@ -23,6 +23,7 @@ def task_interpreter(user_requirement: str):
 
     user_template = jinja2.Template(user_content_template_content)
     output = user_template.render(protocols=protocols)
+
     chat = PromptLayerChatOpenAI(streaming=True, callback_manager=CallbackManager(
         [StreamingStdOutCallbackHandler()]), verbose=True, temperature=0, pl_tags=['task interpreter'])
 
