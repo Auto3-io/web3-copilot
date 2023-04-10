@@ -21,6 +21,7 @@ pandas = "^2.0.0"
 langchain = "0.0.134"
 nest-asyncio = "^1.5.6"
 web3 = "^6.1.0"
+python-dotenv = "^1.0.0"
 
 
 [tool.poetry.group.dev.dependencies]

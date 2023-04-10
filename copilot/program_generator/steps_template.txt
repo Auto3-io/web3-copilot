@@ -1,15 +1,19 @@
 {% for step in steps -%}
 - step {{ loop.index }}: {{ step.action }}
-  protocol: {{ step.protocol }}
-  contract: {{ step.contract }}
-  chain: {{ step.chain }}
-  address: {{ step.address }}
-  notes: {{ step.notes }}
+  methods:
+    {% for method in step.methods -%}
+    - name: {{ method.name }}
+      notes: {{ method.notes }}
+      needed_contracts:
+        {% for contract in method.needed_contracts -%}
+        - {{ contract.protocol }}.{{ contract.contract }}({{ contract.chain }}): {{contract.address}}
+        {% endfor -%}
+    {% endfor -%}
 {% endfor -%}
 
 Related ERC20:
-{% for token in tokens %}
-- {{ token.name }}: {{ token.address }}
+{% for name, address in tokens.items() %}
+- {{ name }}: {{ address }}
 {% endfor -%}
 
 Note: 
@@ -92,3 +96,4 @@ def swap_token_to_eth(
     return receipt
 
 
+Python PROGRAM:

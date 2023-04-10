@@ -2,7 +2,10 @@ import promptlayer
 import os
 import sys
 import openai as the_real_openai
+from dotenv import load_dotenv
 from langchain.chat_models import PromptLayerChatOpenAI, ChatOpenAI as RealChatOpenAI
+
+load_dotenv()
 
 user_prompt_layer = False
 

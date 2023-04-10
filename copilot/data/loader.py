@@ -24,8 +24,12 @@ class LazyLoadedERC20:
     def get_contract_address(self, symbol, chain_name):
         df = self.get_dataframe()
         contract_addresses = df.loc[df['symbol'] ==
-                                    symbol, 'contract_addresses'].values[0]
-        for contract in contract_addresses:
+                                    symbol, 'contract_addresses'].values
+        if symbol == 'ETH' and chain_name == 'ethereum':
+            return ''
+        if not contract_addresses:
+            raise Exception(f'Not supported symbol: {symbol}({chain_name})')
+        for contract in contract_addresses[0]:
             if contract['platform'] == chain_name:
                 return contract['contract_address']
         return None
@@ -38,8 +42,8 @@ class LazyLoadedContract:
 
     def _load_data(self):
         df = pd.read_csv(self.csv_file)
-        df['symbol'] = df['symbol'].str.lower()
-        df['chain'] = df['chain'].str.lower()
+        df['protocol'] = df['protocol']
+        df['chain'] = df['chain']
         return df
 
     def get_dataframe(self):
@@ -47,15 +51,16 @@ class LazyLoadedContract:
             self._df = self._load_data()
         return self._df
 
-    def get_contract_abi(self, symbol):
+    def get_contract_names(self, protocol):
         df = self.get_dataframe()
-        abi = df.loc[df['symbol'] == symbol, 'abi'].values[0]
+        contracts = df.loc[lambda df: (df['protocol'] == protocol), 'name']
+        return contracts.values
 
-        return abi
-
-    def get_contract_address(self, symbol, chain_name, contract_name):
+    def get_contract_address(self, protocol, chain_name, contract_name):
         df = self.get_dataframe()
-        address = df.loc[(df['symbol'] == symbol) & (df['chain'] == chain_name) & (
+        if contract_name not in self.get_contract_names(protocol):
+            raise Exception(f'Not supported contract: {protocol}:{contract_name}({chain_name})')
+        address = df.loc[(df['protocol'] == protocol) & (df['chain'] == chain_name) & (
             df['name'] == contract_name), 'address'].values[0]
 
         return address
@@ -78,10 +83,6 @@ def get_erc20_address(symbol, chain_name):
 
 def get_contract_address(protocol, chain_name, contract_name):
     return contract_df.get_contract_address(protocol, chain_name, contract_name)
-
-
-def get_contract_abi(protocol):
-    return contract_df.get_contract_abi(protocol)
 
 
 __all__ = ['get_protocols', 'get_erc20_address', 'get_erc20_abi']

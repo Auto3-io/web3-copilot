@@ -1,5 +1,3 @@
-"""Send greetings."""
-
 import click
 import copy
 from copilot.task_interpreter.task_interpreter import task_interpreter
@@ -11,9 +9,6 @@ import yaml
 import os
 
 
-
-@click.command()
-@click.option("--input", "-i", type=str)
 def run(input):
     click.echo('Strat interpreter user task: {}'.format(input))
     steps_raw = task_interpreter(input)
@@ -25,11 +20,6 @@ def run(input):
         for step in steps
         for token_name, token_address in get_tokens_from_step(step, tokens).items()
     }
-
-    transformed_tokens = []
-    for token in tokens:
-        transformed_tokens.append(
-            {'name': token['symbol'], 'chain': token['chain'], 'address': token['address']})
 
     for step in steps:
         if not step['action']:
@@ -43,26 +33,24 @@ def run(input):
         raise Exception("Step count not match")
 
     to_program_steps = []
-    for i in range(summarized_steps):
-        new_step = copy.deepcopy(summarized_steps[i])
+    for i in range(len(summarized_steps)):
+        new_step = yaml.safe_load((summarized_steps[i].response))
         new_step['action'] = steps[i]['action']
-        new_step['protocol'] = summarized_steps[i]['protocol']
-        new_step['contract'] = summarized_steps[i]['contract']
-        new_step['chain'] = summarized_steps[i]['chain']
-
-        print("Find contract address: {} {} {}".format(
-            new_step['protocol'], new_step['contract'], new_step['chain']))
-
-        new_step['address'] = get_contract_address(
-            new_step['protocol'], new_step['chain'], new_step['contract'])
+        for method in new_step['methods']:
+            for contract in method['needed_contracts']:
+                contract['address'] = get_contract_address(
+                    contract['protocol'], contract['chain'], contract['contract'])
+                print("Find contract address: {}:{}({}), {} \n".format(
+                    contract['protocol'], contract['contract'], contract['chain'], contract['address']))
         to_program_steps.append(new_step)
 
-    program = program_generator(to_program_steps, )
+    program = program_generator(to_program_steps, tokens)
 
     # save program to local tmp dir
     file_path = os.path.join('./', 'code.py')
     with open(file_path, 'w') as file:
-        file.write(program)
+        file.write(program.content)
+
 
 def get_tokens_from_step(step, tokens):
     if 'tokens' in step:
@@ -73,3 +61,6 @@ def get_tokens_from_step(step, tokens):
             for token in step['tokens'] if token['name'] not in tokens
         }
     return {}
+
+
+run('swap 1000 USDC for ETH')
