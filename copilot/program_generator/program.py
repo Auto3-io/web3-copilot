@@ -12,12 +12,6 @@ from langchain.schema import (
     SystemMessage
 )
 
-promptlayer.api_key = os.environ['PROMPT_API_KEY']
-
-# Swap out your 'import openai'
-openai = promptlayer.openai
-openai.api_key = os.environ['OPENAI_API_KEY']
-
 
 def program_generator(steps, tokens):
     p = Path(__file__).with_name('./steps_template.txt')
@@ -30,9 +24,12 @@ def program_generator(steps, tokens):
     chat = PromptLayerChatOpenAI(streaming=True, callback_manager=CallbackManager(
         [StreamingStdOutCallbackHandler()]), verbose=True, temperature=0, pl_tags=['program_swap_transfer'])
 
+    print("\nProgram instructions: \n")
+    print(output)
+
     messages = [
         SystemMessage(
-            content=f'Generate a Python program to accomplish the following on-chain operations:'),
+            content=f'Generate a Python PROGRAM to accomplish the following on-chain operations: (Do not include any additional information besides program.)'),
         HumanMessage(
             content=output
         )

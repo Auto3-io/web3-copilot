@@ -2,6 +2,7 @@ Protocols you can access:
 {% for protocol in protocols -%}
 - {{ protocol.name }} ({{ ', '.join(protocol.chains) }}): {{ protocol.description }}
 {% endfor %}
+
 You must output a pure YAML and the schema must be:
 - steps: list
     - id
@@ -15,17 +16,34 @@ You must output a pure YAML and the schema must be:
         - chain
     - notes
 
-A output example (You must output the following format.):
+Output example 1 (You must output the following format.):
 steps:
   - id: 1
-    action: 'Swap 1000 USDC for ETH on Uniswap'
+    action: "A Action to do something"
     protocol:
-      name: 'Uniswap'
-      description: 'A decentralized exchange protocol for token swaps.'
-      chain: 'Ethereum'
+      name: "XXXX"
+      description: "A protocol introduction for this action."
+      chain: "Ethereum"
     tokens:
-      - name: 'USDC'
-        chain: 'Ethereum'
-      - name: 'ETH'
-        chain: 'Ethereum'
-    notes: 'The source of USDC can be the user balance or obtained from a previous operation.'
+      - name: "USDC"
+        chain: "Ethereum"
+      - name: "ETH"
+        chain: "Ethereum"
+    notes: "Notes about where the tokens from."
+
+Output example 2 for task `swap 200 USDC for ETH`:
+steps:
+  - id: 1
+    action: "Swap 200 USDC for ETH"
+    protocol:
+      name: "Uniswap"
+      description: "..."
+      chain: "Ethereum"
+    tokens:
+      - name: "USDC"
+        chain: "Ethereum"
+      - name: "ETH"
+        chain: "Ethereum"
+    notes: "The source of USDC can be the user balance"
+
+OUTPUT: 
