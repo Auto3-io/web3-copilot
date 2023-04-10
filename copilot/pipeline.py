@@ -1,12 +1,10 @@
 import click
-import copy
-from copilot.task_interpreter.task_interpreter import task_interpreter
-from copilot.method_search_engine.engine import search_engine
-from copilot.data.loader import get_contract_address, get_erc20_address
-from copilot.program_generator.program import program_generator
 import yaml
 
-import os
+from copilot.data.loader import get_contract_address, get_erc20_address
+from copilot.method_search_engine.engine import search_engine
+from copilot.program_generator.program import program_generator
+from copilot.task_interpreter.task_interpreter import task_interpreter
 
 
 def pipeline(input):

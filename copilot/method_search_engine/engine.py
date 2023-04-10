@@ -1,8 +1,11 @@
-from llama_index import GPTSimpleVectorIndex, LLMPredictor, ServiceContext, QuestionAnswerPrompt
-from copilot.config import ChatOpenAI
-from copilot.async_util import run_async_tasks
 from pathlib import Path
 from typing import List
+
+from llama_index import (GPTSimpleVectorIndex, LLMPredictor,
+                         QuestionAnswerPrompt, ServiceContext)
+
+from copilot.async_util import run_async_tasks
+from copilot.config import ChatOpenAI
 
 
 def search_engine(actions: List[str]):

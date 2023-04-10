@@ -1,16 +1,12 @@
-from copilot.config import ChatOpenAI
-from copilot.data.loader import get_protocols
+from pathlib import Path
+
 import jinja2
 from langchain.callbacks.base import CallbackManager
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
-from langchain.schema import HumanMessage
-from pathlib import Path
+from langchain.schema import HumanMessage, SystemMessage
 
-
-from langchain.schema import (
-    HumanMessage,
-    SystemMessage
-)
+from copilot.config import ChatOpenAI
+from copilot.data.loader import get_protocols
 
 protocols = get_protocols()
 
