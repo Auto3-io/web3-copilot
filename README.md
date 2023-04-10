@@ -38,7 +38,7 @@ $ poetry run copilot -i "Swap 1000 USDC for ETH"
 > **Query**: Operate on Ethereum, Swap 1000 USDC for ETH, then send 0.1 amounts of ETH separately to two addresses (0xc9270B4d0aB7A92dC194eFC349d24c685A6A630d, 0x2A52e553D3fa7beb2C55fd4Cc94C5a3F659E8df8).
 
 ```bash
-$ poetry run copilot -i "Operate on Ethereum, Swap 1000 USDC for ETH, then send 0.1 amounts of ETH separately to two addresses (0xc9270B4d0aB7A92dC194eFC349d24c685A6A630d, 0x2A52e553D3fa7beb2C55fd4Cc94C5a3F659E8df8), and deposit 0.2 ETH to Scroll."
+$ poetry run copilot -i "Operate on Ethereum, Swap 1000 USDC for ETH, then send 0.1 amounts of ETH separately to two addresses (0xc9270B4d0aB7A92dC194eFC349d24c685A6A630d, 0x2A52e553D3fa7beb2C55fd4Cc94C5a3F659E8df8)."
 ```
 
 Some examples:
