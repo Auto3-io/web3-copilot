@@ -28,13 +28,17 @@ def pipeline(input):
     click.echo('\nStart searching methods: {}'.format(
         [step['action'] for step in steps]))
     summarized_steps = search_engine([step['action'] for step in steps])
+    click.echo('\nFinish searching methods')
 
     if len(steps) != len(summarized_steps):
         raise Exception("Step count not match")
 
     to_program_steps = []
     for i in range(len(summarized_steps)):
-        new_step = yaml.safe_load((summarized_steps[i].response))
+        raw_step = summarized_steps[i].response
+        print('\n Step {}:\n {}'.format(i, raw_step))
+
+        new_step = yaml.safe_load((raw_step))
         new_step['action'] = steps[i]['action']
         for method in new_step['methods']:
             for contract in method['needed_contracts']:

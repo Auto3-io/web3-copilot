@@ -11,5 +11,4 @@ import os
 @click.command()
 @click.option("--input", "-i", type=str)
 def run(input):
-    click.echo('Strat interpreter user task: {}'.format(input))
     pipeline(input)
