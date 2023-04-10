@@ -1,8 +1,11 @@
-from llama_index import GPTSimpleVectorIndex, LLMPredictor, ServiceContext, QuestionAnswerPrompt
-from copilot.config import ChatOpenAI
-from copilot.async_util import run_async_tasks
 from pathlib import Path
 from typing import List
+
+from llama_index import (GPTSimpleVectorIndex, LLMPredictor,
+                         QuestionAnswerPrompt, ServiceContext)
+
+from copilot.async_util import run_async_tasks
+from copilot.config import ChatOpenAI
 
 
 def search_engine(actions: List[str]):
@@ -18,7 +21,7 @@ def search_engine(actions: List[str]):
 
     # define custom QuestionAnswerPrompt
     QA_PROMPT_TMPL = (
-        "Write a summary for the action step with a method that is needed to invoke."
+        "Write a YAML summary for the action step with a method that is needed to invoke."
         "The summary will help another LLM generate Python program."
         "You should output related usage note, method signature, protocol, contract, chain are required for user to use this method. \n"
         "---------------------\n"
@@ -28,7 +31,7 @@ def search_engine(actions: List[str]):
         "The method name and related information you use must come from the above-mentioned content, "
         "please write summary for action: {query_str}\n\n"
         "You must output the following YAML format. (Replace \" with ` in notes.) \n"
-        "Example output: \n"
+        "Example output 1: \n"
         "methods: \n"
         "  - name: swapMethod(uint amountIn, uint amountOutMin, address[] path, address to, uint deadline) external returns (uint[] amounts)\n"
         "    needed_contracts: (if need address of the contract, you should list them) \n"
@@ -36,6 +39,12 @@ def search_engine(actions: List[str]):
         "       chain: SomeChain (egg., ethereum, polygon, scroll)\n"
         "       contract: SomeContract (name of the contract, No need to end with a .sol extension.)\n"
         "    notes: \"Some notes to tell user how to use this `swapMethod`, for address [`0x123`, `0x256`].\"\n"
+        "Example output 2: \n"
+        "methods: \n"
+        "  - name: transfer(uint amount, address to)"
+        "    needed_contracts: [] (No need to contracts for builtin methods) \n"
+        "    notes: \"Some notes to tell user how to use this `transfer`, for address `0x123`.\"\n\n"
+        "SUMMARY: \n"
     )
     QA_PROMPT = QuestionAnswerPrompt(QA_PROMPT_TMPL)
 
@@ -44,7 +53,7 @@ def search_engine(actions: List[str]):
     tasks = [
         index.aquery(action,
                      service_context=service_context,
-                     similarity_top_k=10,
+                     similarity_top_k=5,
                      response_mode="tree_summarize",
                      text_qa_template=QA_PROMPT
                      )

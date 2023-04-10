@@ -15,7 +15,7 @@ You can perform any combination of operations on supported protocols through sim
 - Supported chains: Ethereum (more chains comming soon.)
 - DeFi (You can invoke any method of them via natural language):
   - Uniswap V2/V3
-  - AAVE V2/V3
+  - AAVE V3
   - Curve
   - ... (more protocols comming soon. It's very easy to extend)
 - ERC20 Tokens: Almost all mainstream ERC20 tokens.
@@ -25,20 +25,26 @@ You can perform any combination of operations on supported protocols through sim
 ```bash
 $ git clone git@github.com:Auto3-io/auto3-copilot.git
 $ poetry install
-$ python apply_patch.py openai_patch.diff langchain langchain/chat_models/openai.py
+$ export OPENAI_API_KEY=sk-xxxx
 ```
 
 ### Example usage
-> **Query**: Operate on Ethereum, Swap 1000 USDC for ETH, then send 0.1 amounts of ETH separately to two addresses (0xc9270B4d0aB7A92dC194eFC349d24c685A6A630d, 0x2A52e553D3fa7beb2C55fd4Cc94C5a3F659E8df8), and deposit 0.2 ETH to Scroll.
+> **Query**: Swap 1000 USDC for ETH
+
+```bash
+$ poetry run copilot -i "Swap 1000 USDC for ETH"
+```
+
+> **Query**: Operate on Ethereum, Swap 1000 USDC for ETH, then send 0.1 amounts of ETH separately to two addresses (0xc9270B4d0aB7A92dC194eFC349d24c685A6A630d, 0x2A52e553D3fa7beb2C55fd4Cc94C5a3F659E8df8).
 
 ```bash
 $ poetry run copilot -i "Operate on Ethereum, Swap 1000 USDC for ETH, then send 0.1 amounts of ETH separately to two addresses (0xc9270B4d0aB7A92dC194eFC349d24c685A6A630d, 0x2A52e553D3fa7beb2C55fd4Cc94C5a3F659E8df8), and deposit 0.2 ETH to Scroll."
 ```
 
 Some examples:
-- Provide uniswap liquidity for USDC/WETH
 - Swap 1 ETH for USDC, then send all my usdc to0xc9270B4d0aB7A92dC194eFC349d24c685A6A630d`
-- Convert all my ETH to USDC (leave 0.1 ETH), then deposit into AAVE.
+- Convert all my ETH to USDC (leave 0.1 ETH), then deposit into AAVE V3.
+- Provide 1 ETH and its corresponding USDC liquidity to the USDC/WETH Uniswap V2 pool.
 
 ## How it works.
 

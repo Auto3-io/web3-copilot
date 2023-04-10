@@ -1,16 +1,12 @@
-from copilot.config import ChatOpenAI
-from copilot.data.loader import get_protocols
+from pathlib import Path
+
 import jinja2
 from langchain.callbacks.base import CallbackManager
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
-from langchain.schema import HumanMessage
-from pathlib import Path
+from langchain.schema import HumanMessage, SystemMessage
 
-
-from langchain.schema import (
-    HumanMessage,
-    SystemMessage
-)
+from copilot.config import ChatOpenAI
+from copilot.data.loader import get_protocols
 
 protocols = get_protocols()
 
@@ -35,9 +31,9 @@ def task_interpreter(user_requirement: str):
         "Requirements:\n"
         "  1. As few steps as possible. \n"
         "  2. There is no need to list delegate or approve authorization as a separate step;"
-        "  simply add this requirement to the notes.  Specify whether it is necessary to check "
-        "  beforehand, such as the need to verify the allowance before using many tokens."
-        "  For example, a swap only need output one step."
+        "  simply add requirement of `delegate` or `approve` operation if needed to the notes."
+        "  Specify whether it is necessary to check beforehand, such as the need to verify"
+        "  the allowance before using many tokens. For example, a swap only need output one step."
     )
     messages = [
         SystemMessage(
