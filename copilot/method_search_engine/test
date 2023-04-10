@@ -1,7 +1,0 @@
-Method: 
-  - name: swapExactTokensForETH(uint amountIn, uint amountOutMin, address[] path, address to, uint deadline) external returns (uint[] amounts)
-    needed_contracts:
-      - protocol: UniswapV2
-        chain: Ethereum
-        contract: UniswapV2Router02
-    notes: "To swap 1000 USDC for ETH using UniswapV2, you need to call the method \"swapExactTokensForETH\" with the following parameters: amountIn should be set to the amount of USDC to swap, for this example it is 1000 (the amount should be in smallest unit), amountOutMin should be set to the minimum amount of ETH you want to receive, path should be set to the path of the token trade, for this example it should be [\"0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48\", \"0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"], to should be set to the address where the ETH should be sent to, deadline should be set to the timestamp before which the transaction should be executed. Make sure your smart contract has enough USDC and has approved UniswapV2Router02 to spend it by calling the approve method on the USDC token contract."
