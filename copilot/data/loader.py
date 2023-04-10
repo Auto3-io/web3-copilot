@@ -42,8 +42,7 @@ class LazyLoadedContract:
 
     def _load_data(self):
         df = pd.read_csv(self.csv_file)
-        df['protocol'] = df['protocol']
-        df['chain'] = df['chain']
+        df['chain'] = df['chain'].str.lower()
         return df
 
     def get_dataframe(self):
@@ -51,16 +50,28 @@ class LazyLoadedContract:
             self._df = self._load_data()
         return self._df
 
+    # TODO: cache
     def get_contract_names(self, protocol):
         df = self.get_dataframe()
         contracts = df.loc[lambda df: (df['protocol'] == protocol), 'name']
         return contracts.values
 
-    def get_contract_address(self, protocol, chain_name, contract_name):
+    # TODO: cache
+    def get_protocols(self, chain: str):
+        chain = chain.lower()
         df = self.get_dataframe()
-        if contract_name not in self.get_contract_names(protocol):
-            raise Exception(f'Not supported contract: {protocol}:{contract_name}({chain_name})')
-        address = df.loc[(df['protocol'] == protocol) & (df['chain'] == chain_name) & (
+        protocols = df.loc[lambda df: (
+            df['chain'] == chain), 'protocol'].unique()
+        return protocols
+
+    def get_contract_address(self, protocol: str, chain: str, contract_name: str):
+        chain = chain.lower()
+        df = self.get_dataframe()
+        if contract_name not in self.get_contract_names(protocol) or protocol not in self.get_protocols(chain):
+            raise Exception(
+                f'Not supported contract: {protocol}:{contract_name}({chain})')
+
+        address = df.loc[(df['protocol'] == protocol) & (df['chain'] == chain) & (
             df['name'] == contract_name), 'address'].values[0]
 
         return address

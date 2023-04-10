@@ -9,7 +9,7 @@ import yaml
 import os
 
 
-def run(input):
+def pipeline(input):
     click.echo('Strat interpreter user task: {}'.format(input))
     steps_raw = task_interpreter(input)
     steps = yaml.safe_load(steps_raw.content)['steps']
@@ -45,11 +45,12 @@ def run(input):
         to_program_steps.append(new_step)
 
     program = program_generator(to_program_steps, tokens)
+    return program
 
-    # save program to local tmp dir
-    file_path = os.path.join('./', 'code.py')
-    with open(file_path, 'w') as file:
-        file.write(program.content)
+    # TODO: save an run on vm
+    # file_path = os.path.join('./', 'tmp_code.py')
+    # with open(file_path, 'w') as file:
+        # file.write(program.content)
 
 
 def get_tokens_from_step(step, tokens):
@@ -61,6 +62,3 @@ def get_tokens_from_step(step, tokens):
             for token in step['tokens'] if token['name'] not in tokens
         }
     return {}
-
-
-run('swap 1000 USDC for ETH')
