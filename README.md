@@ -25,6 +25,8 @@ You can perform any combination of operations on supported protocols through sim
 ```bash
 $ git clone git@github.com:Auto3-io/auto3-copilot.git
 $ poetry install
+$ poetry shell
+
 $ export OPENAI_API_KEY=sk-xxxx
 ```
 
