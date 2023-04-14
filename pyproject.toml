@@ -7,7 +7,7 @@ readme = "README.md"
 packages = [{include = "copilot"}]
 
 [tool.poetry.scripts]
-greet = "copilot.greet:greet"
+copilot = "copilot.greet:run"
 
 [tool.poetry.dependencies]
 python = "^3.10"
@@ -18,10 +18,16 @@ pyyaml = "^6.0"
 promptlayer = "^0.1.80"
 jinja2 = "^3.1.2"
 pandas = "^2.0.0"
+langchain = "^0.0.136"
+nest-asyncio = "^1.5.6"
+web3 = "^6.1.0"
+python-dotenv = "^1.0.0"
 
 
 [tool.poetry.group.dev.dependencies]
 autopep8 = "^2.0.2"
+unidiff = "^0.7.5"
+ipdb = "^0.13.13"
 
 [build-system]
 requires = ["poetry-core"]

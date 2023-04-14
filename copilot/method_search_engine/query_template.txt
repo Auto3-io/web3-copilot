@@ -1,0 +1,1 @@
+I need to find smart contract methods that can help me {{ action }}. Please show me relevant methods and usage guide for them.
