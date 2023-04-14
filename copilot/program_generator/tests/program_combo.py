@@ -17,7 +17,7 @@ openai = promptlayer.openai
 openai.api_key = os.environ['OPENAI_API_KEY']
 
 def program_generator():
-    p = Path(__file__).with_name('./pgt_swap_transfer.txt')
+    p = Path(__file__).with_name('./pgt_combo.txt')
     with p.open('r') as f:
         user_content_template_content = f.read()
 
