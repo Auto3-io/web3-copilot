@@ -22,10 +22,10 @@ user_content = '''
 - ABI: '{"inputs":[{"internalType":"uint256","name":"amountIn","type":"uint256"},{"internalType":"uint256","name":"amountOutMin","type":"uint256"},{"internalType":"address[]","name":"path","type":"address[]"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"deadline","type":"uint256"}],"name":"swapExactTokensForTokens","outputs":[{"internalType":"uint256[]","name":"amounts","type":"uint256[]"}],"stateMutability":"nonpayable","type":"function"}'
 - Documentation: Swaps an exact amount of input tokens for as many output tokens as possible...
 - Additional check: allowance
-  - ABI: {...}
+  - ABI: {}
   - Documentation: Returns the remaining number of tokens that spender will be allowed to spend on behalf of owner...
 - Additional action: approve
-  - ABI: {...}
+  - ABI: {"constant":false,"inputs":[{"name":"guy","type":"address"},{"name":"wad","type":"uint256"}],"name":"approve","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"}
   - Documentation: Approves a specified address to spend a specified amount of tokens on the caller's behalf...
 
 2. Send half of the acquired ETH to 0x123:
@@ -53,7 +53,7 @@ Related ERC20:
 
 
 openai.ChatCompletion.create(
-    model="code-davinci-002",
+    model="gpt-3.5-turbo",
     messages=[
         {"role": "system", "content": "Generate a Python program to accomplish the following on-chain operations:"},
         {"role": "user", "content": user_content},
