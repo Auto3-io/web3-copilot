@@ -1,3 +1,4 @@
+import os 
 from pathlib import Path
 from typing import List
 
@@ -12,8 +13,12 @@ def search_engine(actions: List[str]):
     p = Path(__file__).with_name('index.json')
     index = GPTSimpleVectorIndex.load_from_disk(p)
 
-    llm_predictor = LLMPredictor(llm=ChatOpenAI(
-        temperature=0, model_name="gpt-3.5-turbo", max_tokens=1024, pl_tags=['search_engine']))
+    llm_predictor_args = {"temperature":0, "model_name":"gpt-3.5-turbo", "max_tokens":1024}
+
+    if os.getenv('PROMPTLAYER_API_KEY') is not None:
+        llm_predictor_args['pl_tags'] = ['search_engine']
+
+    llm_predictor = LLMPredictor(llm=ChatOpenAI(**llm_predictor_args))
 
     service_context = ServiceContext.from_defaults(llm_predictor=llm_predictor)
 

@@ -1,3 +1,4 @@
+import os 
 from pathlib import Path
 
 import jinja2
@@ -19,8 +20,12 @@ def task_interpreter(user_requirement: str):
     user_template = jinja2.Template(user_content_template_content)
     output = user_template.render(protocols=protocols)
 
-    chat = ChatOpenAI(streaming=True, callback_manager=CallbackManager(
-        [StreamingStdOutCallbackHandler()]), verbose=True, temperature=0, pl_tags=['task interpreter'])
+    chat_args = {'streaming': True, 'callback_manager': CallbackManager([StreamingStdOutCallbackHandler()]), 'verbose': True, 'temperature': 0}
+
+    if os.getenv('PROMPTLAYER_API_KEY') is not None:
+        chat_args['pl_tags'] = ['task_interpreter']
+
+    chat = ChatOpenAI(**chat_args)
 
     system_instruction = (
         f"Please provide a step-by-step plan that satisfies the following user requirement: {user_requirement}"

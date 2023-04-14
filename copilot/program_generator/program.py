@@ -1,7 +1,7 @@
 import promptlayer
 import os
 
-from copilot.config import PromptLayerChatOpenAI
+from copilot.config import ChatOpenAI
 from langchain.callbacks.base import CallbackManager
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 from pathlib import Path
@@ -21,8 +21,12 @@ def program_generator(steps, tokens):
     user_template = jinja2.Template(user_content_template_content)
     output = user_template.render(steps=steps, tokens=tokens)
 
-    chat = PromptLayerChatOpenAI(streaming=True, callback_manager=CallbackManager(
-        [StreamingStdOutCallbackHandler()]), verbose=True, temperature=0, pl_tags=['program_swap_transfer'])
+    chat_args = {'streaming': True, 'callback_manager': CallbackManager([StreamingStdOutCallbackHandler()]), 'verbose': True, 'temperature': 0}
+
+    if os.getenv('PROMPTLAYER_API_KEY') is not None:
+        chat_args['pl_tags'] = ['program_generator']
+
+    chat = ChatOpenAI(**chat_args)
 
     print("\nProgram instructions: \n")
     print(output)
